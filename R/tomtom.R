@@ -1,6 +1,8 @@
-#' @import httr
+#' @import dplyr
 #' @import logger
 NULL
+
+PKG_VERSION <- utils::packageDescription('tomtom')$Version
 
 #' Set API key
 #'
@@ -14,4 +16,8 @@ NULL
 set_api_key <- function(api_key) {
   log_debug("Setting API key: {api_key}.")
   assign("api_key", api_key, envir = cache)
+}
+
+get_api_key <- function() {
+  get("api_key", api_key, envir = cache)
 }
