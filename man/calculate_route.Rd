@@ -4,7 +4,12 @@
 \alias{calculate_route}
 \title{Title}
 \usage{
-calculate_route()
+calculate_route(src, dst)
+}
+\arguments{
+\item{src}{The location (vector of latitude, longitude) of the origin.}
+
+\item{dst}{The location (vector of latitude, longitude) of the destination.}
 }
 \value{
 

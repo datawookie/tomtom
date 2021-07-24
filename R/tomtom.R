@@ -1,4 +1,5 @@
 #' @import dplyr
+#' @import httr
 #' @import logger
 NULL
 

@@ -1,16 +1,32 @@
+URL_ROUTING <- 'https://api.tomtom.com/routing/1/calculateRoute'
+
 #' Title
+#'
+#' @param src The location (vector of latitude, longitude) of the origin.
+#' @param dst The location (vector of latitude, longitude) of the destination.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-calculate_route <- function() {
+calculate_route <- function(src, dst) {
+  src <- paste(src, collapse = ",")
+  dst <- paste(dst, collapse = ",")
+
+  URL = file.path(URL_ROUTING, URLencode(paste(src, dst, sep = ":"), reserved = TRUE), 'json')
+
   response = GET(
-    'https://api.tomtom.com/routing/1/calculateRoute/52.50931%2C13.42936%3A52.50274%2C13.43872/json',
+    URL,
     query = list(
       avoid = 'unpavedRoads'
     )
   )
 
-  content(response)
+  route <- content(response)
+
+  # This gives distance and travel time.
+  #
+  # route$routes[[1]]$legs[[1]]$summary
+
+  route$routes[[1]]$legs[[1]]$points %>% map_dfr(identity)
 }
