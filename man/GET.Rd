@@ -9,6 +9,10 @@ GET(url, query = list(), headers = list(), config = list(), retry = 5, ...)
 \arguments{
 \item{url}{URL to retrieve.}
 
+\item{query}{Query parameters.}
+
+\item{headers}{Header records.}
+
 \item{config}{Additional configuration settings.}
 
 \item{retry}{Number of times to retry request on failure.}

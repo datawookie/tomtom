@@ -15,6 +15,8 @@ http_error_message <- function(response) {
 #' @param url URL to retrieve.
 #' @param config Additional configuration settings.
 #' @param ... Further named parameters.
+#' @param query Query parameters.
+#' @param headers Header records.
 #' @param retry Number of times to retry request on failure.
 GET <- function(url, query = list(), headers = list(), config = list(), retry = 5, ...) {
   headers$accept = "*/*"

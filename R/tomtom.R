@@ -7,7 +7,7 @@ PKG_VERSION <- utils::packageDescription('tomtom')$Version
 
 #' Set API key
 #'
-#' @param api_key
+#' @param api_key TomTom API key.
 #'
 #' @return
 #' @export
