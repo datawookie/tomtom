@@ -10,7 +10,6 @@ URL_ROUTING <- 'https://api.tomtom.com/routing/1/calculateRoute'
 #' @param locations A \code{sf} object with a series of points that need to be on route.
 #' @param alternatives Number of alternative routes.
 #'
-#' @return
 #' @export
 #'
 #' @examples

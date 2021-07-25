@@ -13,7 +13,6 @@ FIELDS <- '{incidents{type,geometry{type,coordinates},properties{id,iconCategory
 #' @param right  Right edge of bounding box.
 #' @param top  Top edge of bounding box.
 #'
-#' @return
 #' @export
 #'
 #' @examples

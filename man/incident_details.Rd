@@ -15,9 +15,6 @@ incident_details(left, bottom, right, top)
 
 \item{top}{Top edge of bounding box.}
 }
-\value{
-
-}
 \description{
 Traffic incidents
 }

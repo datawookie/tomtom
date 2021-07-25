@@ -9,9 +9,6 @@ set_api_key(api_key)
 \arguments{
 \item{api_key}{TomTom API key.}
 }
-\value{
-
-}
 \description{
 Set API key
 }

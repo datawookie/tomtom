@@ -11,9 +11,6 @@ calculate_route(locations, alternatives = 0)
 
 \item{alternatives}{Number of alternative routes.}
 }
-\value{
-
-}
 \description{
 Calculate route between series of points
 }
