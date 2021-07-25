@@ -1,5 +1,10 @@
 URL_ROUTING <- 'https://api.tomtom.com/routing/1/calculateRoute'
 
+# More documentation (with numerous other options):
+#
+# - https://developer.tomtom.com/routing-api/routing-api-documentation
+# - https://developer.tomtom.com/content/routing-api-explorer
+
 #' Calculate route between series of points
 #'
 #' @param locations A \code{sf} object with a series of points that need to be on route.
@@ -54,11 +59,11 @@ calculate_route <- function(
       )
 
     points <- map_dfr(leg$points, identity) %>%
-      rename(
+      select(
         lat = latitude,
         lon = longitude
       ) %>%
-      nest(points = c(lat, lon))
+      nest(points = c(lon, lat))
 
     bind_cols(summary, points)
   }
@@ -69,7 +74,7 @@ calculate_route <- function(
       nest(data = everything())
   }
 
-  routes <- map_dfr(journey$routes, unpack_route) %>%
+  map_dfr(journey$routes, unpack_route) %>%
     mutate(route = row_number()) %>%
     unnest(cols = c(data)) %>%
     select(route, leg, everything()) %>%
