@@ -1,4 +1,6 @@
 #' @import dplyr
+#' @import purrr
+#' @import tidyr
 #' @import httr
 #' @import logger
 NULL

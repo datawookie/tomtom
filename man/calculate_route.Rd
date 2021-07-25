@@ -2,18 +2,30 @@
 % Please edit documentation in R/routing.R
 \name{calculate_route}
 \alias{calculate_route}
-\title{Title}
+\title{Calculate route between series of points}
 \usage{
-calculate_route(src, dst)
+calculate_route(locations, alternatives = 0)
 }
 \arguments{
-\item{src}{The location (vector of latitude, longitude) of the origin.}
+\item{locations}{A \code{sf} object with a series of points that need to be on route.}
 
-\item{dst}{The location (vector of latitude, longitude) of the destination.}
+\item{alternatives}{Number of alternative routes.}
 }
 \value{
 
 }
 \description{
-Title
+Calculate route between series of points
+}
+\examples{
+locations <- tribble(
+  ~label, ~lon, ~lat,
+  "Durban", 31.05, -29.88,
+  "Port Elizabeth", 25.6, -33.96,
+  "Cape Town", 18.42, -33.93,
+  "Johannesburg", 28.05, -26.20
+)
+
+locations <- st_as_sf(locations, coords = c("lon", "lat"), remove = FALSE, crs = 4326)
+calculate_route(locations)
 }

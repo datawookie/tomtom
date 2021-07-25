@@ -1,32 +1,80 @@
 URL_ROUTING <- 'https://api.tomtom.com/routing/1/calculateRoute'
 
-#' Title
+#' Calculate route between series of points
 #'
-#' @param src The location (vector of latitude, longitude) of the origin.
-#' @param dst The location (vector of latitude, longitude) of the destination.
+#' @param locations A \code{sf} object with a series of points that need to be on route.
+#' @param alternatives Number of alternative routes.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-calculate_route <- function(src, dst) {
-  src <- paste(src, collapse = ",")
-  dst <- paste(dst, collapse = ",")
+#' locations <- tribble(
+#'   ~label, ~lon, ~lat,
+#'   "Durban", 31.05, -29.88,
+#'   "Port Elizabeth", 25.6, -33.96,
+#'   "Cape Town", 18.42, -33.93,
+#'   "Johannesburg", 28.05, -26.20
+#' )
+#'
+#' locations <- st_as_sf(locations, coords = c("lon", "lat"), remove = FALSE, crs = 4326)
+#' calculate_route(locations)
+calculate_route <- function(
+  locations,
+  alternatives = 0
+) {
+  route = map(locations$geometry, ~ paste(rev(.), collapse = ",")) %>%
+    paste(collapse = ":")
 
-  URL = file.path(URL_ROUTING, URLencode(paste(src, dst, sep = ":"), reserved = TRUE), 'json')
+  URL = file.path(URL_ROUTING, URLencode(route, reserved = TRUE), 'json')
 
   response = GET(
     URL,
     query = list(
-      avoid = 'unpavedRoads'
+      avoid = 'unpavedRoads',
+      maxAlternatives = alternatives
     )
   )
 
-  route <- content(response)
+  journey <- content(response)
 
   # This gives distance and travel time.
   #
-  # route$routes[[1]]$legs[[1]]$summary
+  journey$routes[[1]]$legs[[1]]$summary
 
-  route$routes[[1]]$legs[[1]]$points %>% map_dfr(identity)
+  unpack_leg <- function(leg) {
+    summary <- leg$summary %>%
+      as_tibble() %>%
+      select(
+        distance = lengthInMeters,
+        time = travelTimeInSeconds,
+        delay = trafficDelayInSeconds,
+        depart = departureTime,
+        arrive = arrivalTime
+      )
+
+    points <- map_dfr(leg$points, identity) %>%
+      rename(
+        lat = latitude,
+        lon = longitude
+      ) %>%
+      nest(points = c(lat, lon))
+
+    bind_cols(summary, points)
+  }
+
+  unpack_route <- function(route) {
+    map_dfr(route$legs, unpack_leg) %>%
+      mutate(leg = row_number()) %>%
+      nest(data = everything())
+  }
+
+  routes <- map_dfr(journey$routes, unpack_route) %>%
+    mutate(route = row_number()) %>%
+    unnest(cols = c(data)) %>%
+    select(route, leg, everything()) %>%
+    mutate(
+      route = factor(route),
+      leg = factor(leg)
+    )
 }

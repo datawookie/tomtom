@@ -26,13 +26,10 @@ GET <- function(url, query = list(), headers = list(), config = list(), retry = 
   api_key <- NULL
   try(api_key <- get_api_key(), silent = TRUE)
 
-  response = httr::RETRY(
-    "GET",
+  response = httr::GET(
     url,
     do.call(add_headers, headers),
     query = query,
-    times = retry,
-    terminate_on = c(401, 404, 429),
     httr::user_agent(paste0("tomtom [R] (", PKG_VERSION, ")"))
   )
 
