@@ -17,6 +17,11 @@ FIELDS <- '{incidents{type,geometry{type,coordinates},properties{id,iconCategory
 #' @export
 #'
 #' @examples
+#' #' library(tomtom)
+#'
+#' TOMTOM_API_KEY = Sys.getenv("TOMTOM_API_KEY")
+#' set_api_key(TOMTOM_API_KEY)
+#'
 #' incidents <- incident_details(23.4, 37.9, 24.0, 38.2)
 incident_details <- function(left, bottom, right, top) {
   bbox <- paste(c(left, bottom, right, top), collapse = ",")

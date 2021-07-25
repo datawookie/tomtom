@@ -18,6 +18,14 @@ calculate_route(locations, alternatives = 0)
 Calculate route between series of points
 }
 \examples{
+library(dplyr)
+library(sf)
+
+library(tomtom)
+
+TOMTOM_API_KEY = Sys.getenv("TOMTOM_API_KEY")
+set_api_key(TOMTOM_API_KEY)
+
 locations <- tribble(
   ~label, ~lon, ~lat,
   "Durban", 31.05, -29.88,

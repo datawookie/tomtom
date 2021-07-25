@@ -22,5 +22,10 @@ incident_details(left, bottom, right, top)
 Traffic incidents
 }
 \examples{
+#' library(tomtom)
+
+TOMTOM_API_KEY = Sys.getenv("TOMTOM_API_KEY")
+set_api_key(TOMTOM_API_KEY)
+
 incidents <- incident_details(23.4, 37.9, 24.0, 38.2)
 }
