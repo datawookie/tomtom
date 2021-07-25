@@ -26,7 +26,7 @@ FIELDS <- '{incidents{type,geometry{type,coordinates},properties{id,iconCategory
 incident_details <- function(left, bottom, right, top) {
   bbox <- paste(c(left, bottom, right, top), collapse = ",")
 
-  response = tomtom:::GET(
+  response = GET(
     URL_TRAFFIC_INCIDENT,
     query = list(
       bbox = bbox,
