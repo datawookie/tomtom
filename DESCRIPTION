@@ -17,5 +17,6 @@ Imports:
   httr,
   purrr,
   sf,
-  tidyr
+  tidyr,
+  xml2
 RoxygenNote: 7.1.1
