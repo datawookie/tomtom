@@ -2,7 +2,7 @@ http_error_message <- function(response) {
   status_code <- response$status_code
 
   error_message <- case_when(
-    status_code == 401 ~ "Missing or invalid API key.",
+    status_code %in% c(401, 403) ~ "Missing or invalid TomTom API key.",
     status_code == 404 ~ "Not found.",
     status_code == 429 ~ "Limit exceeded."
   )
