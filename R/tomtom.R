@@ -2,6 +2,9 @@
 #' @import purrr
 #' @import tidyr
 #' @import httr
+#' @importFrom stats setNames
+#' @importFrom utils URLencode
+#'
 NULL
 
 PKG_VERSION <- utils::packageDescription('tomtom')$Version
